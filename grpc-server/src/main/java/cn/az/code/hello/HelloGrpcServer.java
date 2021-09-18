@@ -1,9 +1,9 @@
-package cn.az.myrica.hello;
+package cn.az.code.hello;
 
-import cn.az.myrica.hello.proto.HelloServiceGrpc;
-import cn.az.myrica.hello.proto.Request;
-import cn.az.myrica.hello.proto.Response;
-import cn.az.myrica.interceptor.CustomServerTracingInterceptor;
+import cn.az.code.hello.proto.HelloServiceGrpc;
+import cn.az.code.hello.proto.Request;
+import cn.az.code.hello.proto.Response;
+import cn.az.code.interceptor.CustomServerTracingInterceptor;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

@@ -1,6 +1,6 @@
-package cn.az.myrica;
+package cn.az.code;
 
-import cn.az.myrica.hello.HelloGrpcServer;
+import cn.az.code.hello.HelloGrpcServer;
 import io.jaegertracing.Configuration;
 import io.opentracing.Tracer;
 
@@ -10,7 +10,7 @@ import io.opentracing.Tracer;
  * @author ycpang
  * @since 2021-09-15 17:08
  */
-public class MyricaApplication {
+public class GrpcApplication {
 
     public static void main(String[] args) throws Exception {
         // global tracer

@@ -1,7 +1,7 @@
-package cn.az.myrica.interceptor;
+package cn.az.code.interceptor;
 
-import cn.az.myrica.support.OpenTracingContextKey;
-import cn.az.myrica.support.OperationNameConstructor;
+import cn.az.code.support.OpenTracingContextKey;
+import cn.az.code.support.OperationNameConstructor;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.BindableService;
 import io.grpc.ClientCall;

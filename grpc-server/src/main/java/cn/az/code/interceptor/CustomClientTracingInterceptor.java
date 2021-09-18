@@ -1,7 +1,7 @@
-package cn.az.myrica.interceptor;
+package cn.az.code.interceptor;
 
-import cn.az.myrica.support.ActiveSpanSource;
-import cn.az.myrica.support.OperationNameConstructor;
+import cn.az.code.support.ActiveSpanSource;
+import cn.az.code.support.OperationNameConstructor;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
