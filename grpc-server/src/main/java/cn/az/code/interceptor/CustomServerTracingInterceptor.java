@@ -45,7 +45,7 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
         this.streaming = false;
         this.verbose = false;
         this.tracedAttributes = new HashSet<>(Arrays.asList(ServerRequestAttribute.HEADERS,
-                ServerRequestAttribute.METHOD_NAME, ServerRequestAttribute.METHOD_TYPE, ServerRequestAttribute.CALL_ATTRIBUTES));
+            ServerRequestAttribute.METHOD_NAME, ServerRequestAttribute.METHOD_TYPE, ServerRequestAttribute.CALL_ATTRIBUTES));
     }
 
     private CustomServerTracingInterceptor(Tracer tracer, OperationNameConstructor operationNameConstructor, boolean streaming,
@@ -166,7 +166,7 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
             }
         } catch (IllegalArgumentException e) {
             spanBuilder = this.tracer.buildSpan(operateName)
-                    .withTag("Error", "Extract failed and an IllegalArgumentException was thrown");
+                .withTag("Error", "Extract failed and an IllegalArgumentException was thrown");
         }
         return spanBuilder.start();
     }
