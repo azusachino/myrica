@@ -16,11 +16,12 @@
 
   <modules>
     <module>grpc-server</module>
-    <module>jni-practice</module>
+    <module>img-server</module>
+    <module>jni-server</module>
   </modules>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <spring-cloud.version>2021.0.2</spring-cloud.version>

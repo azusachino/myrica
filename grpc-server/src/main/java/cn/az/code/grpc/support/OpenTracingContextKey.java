@@ -1,10 +1,11 @@
-package cn.az.code.support;
+package cn.az.code.grpc.support;
 
 import io.grpc.Context;
 import io.opentracing.Span;
 
 /**
- * A Context key for the current OpenTracing trace state. Can be used to get the active span, or to set the active span for a scoped unit of work.
+ * A Context key for the current OpenTracing trace state. Can be used to get the
+ * active span, or to set the active span for a scoped unit of work.
  *
  * @author ycpang
  * @since 2021-09-15 12:09

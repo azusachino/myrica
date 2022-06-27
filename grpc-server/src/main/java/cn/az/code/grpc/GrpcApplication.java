@@ -1,6 +1,6 @@
-package cn.az.code;
+package cn.az.code.grpc;
 
-import cn.az.code.hello.HelloGrpcServer;
+import cn.az.code.grpc.hello.HelloGrpcServer;
 import io.jaegertracing.Configuration;
 import io.opentracing.Tracer;
 

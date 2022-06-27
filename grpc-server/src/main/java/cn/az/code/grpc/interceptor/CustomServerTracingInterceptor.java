@@ -1,8 +1,16 @@
-package cn.az.code.interceptor;
+package cn.az.code.grpc.interceptor;
 
-import cn.az.code.support.OpenTracingContextKey;
-import cn.az.code.support.OperationNameConstructor;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
 import com.google.common.collect.ImmutableMap;
+
+import cn.az.code.grpc.support.OpenTracingContextKey;
+import cn.az.code.grpc.support.OperationNameConstructor;
 import io.grpc.BindableService;
 import io.grpc.ClientCall;
 import io.grpc.Context;
@@ -19,13 +27,6 @@ import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
 import io.opentracing.propagation.Format;
 import io.opentracing.propagation.TextMapAdapter;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author ycpang
@@ -45,11 +46,13 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
         this.streaming = false;
         this.verbose = false;
         this.tracedAttributes = new HashSet<>(Arrays.asList(ServerRequestAttribute.HEADERS,
-            ServerRequestAttribute.METHOD_NAME, ServerRequestAttribute.METHOD_TYPE, ServerRequestAttribute.CALL_ATTRIBUTES));
+                ServerRequestAttribute.METHOD_NAME, ServerRequestAttribute.METHOD_TYPE,
+                ServerRequestAttribute.CALL_ATTRIBUTES));
     }
 
-    private CustomServerTracingInterceptor(Tracer tracer, OperationNameConstructor operationNameConstructor, boolean streaming,
-                                           boolean verbose, Set<ServerRequestAttribute> tracedAttributes) {
+    private CustomServerTracingInterceptor(Tracer tracer, OperationNameConstructor operationNameConstructor,
+            boolean streaming,
+            boolean verbose, Set<ServerRequestAttribute> tracedAttributes) {
         this.tracer = tracer;
         this.operationNameConstructor = operationNameConstructor;
         this.streaming = streaming;
@@ -72,22 +75,29 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
     }
 
     /**
-     * Intercept {@link ServerCall} dispatch by the {@code next} {@link ServerCallHandler}. General
+     * Intercept {@link ServerCall} dispatch by the {@code next}
+     * {@link ServerCallHandler}. General
      * semantics of {@link ServerCallHandler#startCall} apply and the returned
      * {@link ServerCall.Listener} must not be {@code null}.
      *
-     * <p>If the implementation throws an exception, {@code call} will be closed with an error.
-     * Implementations must not throw an exception if they started processing that may use {@code
+     * <p>
+     * If the implementation throws an exception, {@code call} will be closed with
+     * an error.
+     * Implementations must not throw an exception if they started processing that
+     * may use {@code
      * call} on another thread.
      *
      * @param call    object to receive response messages
-     * @param headers which can contain extra call metadata from {@link ClientCall#start},
+     * @param headers which can contain extra call metadata from
+     *                {@link ClientCall#start},
      *                e.g. authentication credentials.
      * @param next    next processor in the interceptor chain
-     * @return listener for processing incoming messages for {@code call}, never {@code null}.
+     * @return listener for processing incoming messages for {@code call}, never
+     *         {@code null}.
      */
     @Override
-    public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
+    public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers,
+            ServerCallHandler<ReqT, RespT> next) {
         Map<String, String> headerMap = new HashMap<>();
         for (String k : headers.keys()) {
             if (!k.endsWith(Metadata.BINARY_HEADER_SUFFIX)) {
@@ -119,7 +129,7 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
         Context ctxWithSpan = Context.current().withValue(OpenTracingContextKey.getKey(), span);
         ServerCall.Listener<ReqT> listenerWithContext = Contexts.interceptCall(ctxWithSpan, call, headers, next);
 
-        return new ForwardingServerCallListener.SimpleForwardingServerCallListener<>(listenerWithContext) {
+        return new ForwardingServerCallListener.SimpleForwardingServerCallListener<ReqT>(listenerWithContext) {
 
             @Override
             public void onMessage(ReqT message) {
@@ -166,7 +176,7 @@ public class CustomServerTracingInterceptor implements ServerInterceptor {
             }
         } catch (IllegalArgumentException e) {
             spanBuilder = this.tracer.buildSpan(operateName)
-                .withTag("Error", "Extract failed and an IllegalArgumentException was thrown");
+                    .withTag("Error", "Extract failed and an IllegalArgumentException was thrown");
         }
         return spanBuilder.start();
     }

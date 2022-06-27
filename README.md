@@ -8,3 +8,4 @@ projects of the latest stuffs
 
 - GRPC Server
 - JNI Practice
+- Spring Native
