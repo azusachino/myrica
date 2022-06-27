@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "MinGW",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "C:\\MinGW\\bin\\g++.exe",
+            "includePath": [
+                "${workspaceFolder}\\include",
+                "C:\\Program Files\\Java\\jdk-11.0.15\\include",
+                "C:\\Program Files\\Java\\jdk-11.0.15\\include\\win32"
+            ],
+            "defines": [],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++11"
+        }
+    ],
+    "version": 4
+}
