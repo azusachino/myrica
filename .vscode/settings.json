@@ -1,0 +1,8 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "files.associations": {
+        "hello-jni.h": "c",
+        "iostream": "cpp"
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/libmyrica"
+}

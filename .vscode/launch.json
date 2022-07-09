@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch GrpcApplication",
+            "request": "launch",
+            "mainClass": "cn.az.code.grpc.GrpcApplication",
+            "projectName": "grpc-server"
+        },
+        {
+            "type": "java",
+            "name": "Launch SpringImgApplication",
+            "request": "launch",
+            "mainClass": "cn.az.code.img.SpringImgApplication",
+            "projectName": "img-server"
+        },
+        {
+            "type": "java",
+            "name": "Launch HelloJni",
+            "request": "launch",
+            "mainClass": "cn.az.code.jni.HelloJni",
+            "projectName": "jni-server",
+            "vmArgs": "-Djava.library.path=/mnt/e/Projects/project-wsl/myrica"
+        }
+    ]
+}
