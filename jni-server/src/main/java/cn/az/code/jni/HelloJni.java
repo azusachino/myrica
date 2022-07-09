@@ -12,13 +12,17 @@ public class HelloJni {
 
     static {
         JniDeploy.getInstance().deploy();
-        System.load("hello-jni.so");
+        // load the so library
+        System.loadLibrary("myrica");
     }
-
-    private native void native_sayHello();
 
     public static void main(String[] args) {
         HelloJni hj = new HelloJni();
-        hj.native_sayHello();
+        hj.native_say();
     }
+
+    /**
+     * Native Say Hello
+     */
+    private native void native_say();
 }

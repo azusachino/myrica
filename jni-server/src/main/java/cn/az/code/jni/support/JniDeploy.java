@@ -24,13 +24,13 @@ public class JniDeploy {
 
     public void deploy() {
         File libFolder = new File("./");
-        File helloLib = new File(libFolder.getPath(), CommonConsts.HELLO_JNI);
+        File helloLib = new File(libFolder.getPath(), CommonConsts.LIB_MYRICA);
         if (!helloLib.exists()) {
-            ClassPathResource cpr = new ClassPathResource(CommonConsts.HELLO_JNI);
+            ClassPathResource cpr = new ClassPathResource(CommonConsts.LIB_MYRICA);
             try (InputStream is = cpr.getInputStream()) {
                 FileUtils.copyInputStreamToFile(is, helloLib);
             } catch (Exception e) {
-                throw new RuntimeException("fail to deploy so libraries");
+                throw new RuntimeException("fail to deploy so libraries", e);
             }
         }
     }

@@ -5,5 +5,6 @@ package cn.az.code.jni.consts;
  */
 public class CommonConsts {
 
-    public static final String HELLO_JNI = "hello-jni.so";
+    // lib + `myrica` (the library name)
+    public static final String LIB_MYRICA = "libmyrica.so";
 }
