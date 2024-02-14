@@ -1,18 +1,8 @@
 package cn.az.code.grpc.interceptor;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nullable;
-
-import com.google.common.collect.ImmutableMap;
-
 import cn.az.code.grpc.support.ActiveSpanSource;
 import cn.az.code.grpc.support.OperationNameConstructor;
+import com.google.common.collect.ImmutableMap;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
@@ -29,8 +19,16 @@ import io.opentracing.Tracer;
 import io.opentracing.propagation.Format;
 import io.opentracing.propagation.TextMap;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 /**
- * An intercepter that applies tracing via OpenTracing to all client requests.
+ * An interceptor that applies tracing via OpenTracing to all client requests.
  *
  * @author ycpang
  * @since 2021-09-15 12:08
@@ -53,9 +51,9 @@ public class CustomClientTracingInterceptor implements ClientInterceptor {
         this.activeSpanSource = ActiveSpanSource.GRPC_CONTEXT;
     }
 
-    private CustomClientTracingInterceptor(Tracer tracer, OperationNameConstructor operationNameConstructor,
-            boolean streaming,
-            boolean verbose, Set<ClientRequestAttribute> tracedAttributes, ActiveSpanSource activeSpanSource) {
+    public CustomClientTracingInterceptor(Tracer tracer, OperationNameConstructor operationNameConstructor,
+                                          boolean streaming,
+                                          boolean verbose, Set<ClientRequestAttribute> tracedAttributes, ActiveSpanSource activeSpanSource) {
         this.tracer = tracer;
         this.operationNameConstructor = operationNameConstructor;
         this.streaming = streaming;
@@ -92,7 +90,7 @@ public class CustomClientTracingInterceptor implements ClientInterceptor {
      */
     @Override
     public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
-            CallOptions callOptions, Channel next) {
+                                                               CallOptions callOptions, Channel next) {
         final String operationName = operationNameConstructor.constructOperationName(method);
 
         Span activeSpan = this.activeSpanSource.getActiveSpan();
@@ -122,7 +120,7 @@ public class CustomClientTracingInterceptor implements ClientInterceptor {
                         span.setTag("grpc.deadline_millis", "null");
                     } else {
                         span.setTag("grpc.deadline_millis",
-                                callOptions.getDeadline().timeRemaining(TimeUnit.MILLISECONDS));
+                            callOptions.getDeadline().timeRemaining(TimeUnit.MILLISECONDS));
                     }
                     break;
                 case METHOD_NAME:
@@ -163,12 +161,12 @@ public class CustomClientTracingInterceptor implements ClientInterceptor {
                     @Override
                     public Iterator<Map.Entry<String, String>> iterator() {
                         throw new UnsupportedOperationException(
-                                "TextMapInjectAdapter should only be used with Tracer.inject()");
+                            "TextMapInjectAdapter should only be used with Tracer.inject()");
                     }
                 });
 
                 Listener<RespT> tracingResponseListener = new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(
-                        responseListener) {
+                    responseListener) {
 
                     @Override
                     public void onHeaders(Metadata headers) {
@@ -193,7 +191,7 @@ public class CustomClientTracingInterceptor implements ClientInterceptor {
                                 span.log("Call closed");
                             } else {
                                 span.log(ImmutableMap.of("Call failed",
-                                        Objects.requireNonNull(status.getDescription(), "")));
+                                    Objects.requireNonNull(status.getDescription(), "")));
                             }
                         }
                         span.finish();

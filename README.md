@@ -9,3 +9,13 @@ projects of the latest stuffs
 - GRPC Server
 - JNI Practice
 - Spring Native
+
+## How to
+
+```shell
+# use docker -> docker image
+mvn -Pnative spring-boot:build-image
+
+# native
+mvn -Pnative native:compile-no-fork
+```

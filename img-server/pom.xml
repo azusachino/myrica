@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>cn.az.code</groupId>
     <artifactId>myrica</artifactId>
     <version>1.0.0</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <artifactId>img-server</artifactId>
@@ -16,7 +17,8 @@
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <!-- webflux -->
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
   </dependencies>
 
@@ -33,7 +35,34 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>0.9.23</version>
+        <configuration>
+          <imageName>${project.artifactId}</imageName>
+          <mainClass>cn.az.code.img.SpringImgApplication</mainClass>
+        </configuration>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build-native</id>
+            <goals>
+              <goal>compile-no-fork</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+          <execution>
+            <id>test-native</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
+
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -43,5 +72,11 @@
       </resource>
     </resources>
   </build>
+
+  <profiles>
+    <profile>
+      <id>native</id>
+    </profile>
+  </profiles>
 
 </project>
